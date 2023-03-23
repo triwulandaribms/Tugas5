@@ -16,6 +16,9 @@
       </thead>
       <tbody></tbody>
     </table>
+    <form name="out">
+      <button>Logout</button>
+    </form>
     <script>
       const nama = document.querySelector("span");
 
@@ -41,6 +44,13 @@
             tbody.appendChild(tr);
           });
         });
+
+      document.out.onsubmit = (e) => {
+        e.preventDefault();
+        fetch("/api/logout").then(async (response) => {
+          location.href = "/login";
+        });
+      };
     </script>
   </body>
 </html>

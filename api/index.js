@@ -88,32 +88,36 @@ app.get("/api/me", (req, res) => {
 
 // tampilkan semua
 app.get("/api/mahasiswa", async (_req, res) => {
-  const results = await client.query("SELECT * FROM mahasiswa ORDER BY id");
+  const results = await client.query("SELECT * FROM mahasiswa ORDER BY nim");
   res.json(results.rows);
 });
 
 // tampilkan satu
-app.get("/api/mahasiswa/:id", async (req, res) => {
+app.get("/api/mahasiswa/:nim", async (req, res) => {
   const results = await client.query(
-    `SELECT * FROM mahasiswa WHERE id = ${req.params.id}`
+    `SELECT * FROM mahasiswa WHERE nim = ${req.params.nim}`
   );
   res.json(results.rows[0]);
 });
+
+const salt = await bcrypt.genSalt();
+const hash = await bcrypt.hash("awannnn", salt);
+console.log(hash);
 
 // tambah
 app.post("/api/mahasiswa", async (req, res) => {
   const salt = await bcrypt.genSalt();
   const hash = await bcrypt.hash(req.body.password, salt);
   await client.query(
-    `INSERT INTO mahasiswa (nim, nama, password) VALUES ('${req.body.nim}', '${req.body.nama}', '${hash}')`
+    `INSERT INTO mahasiswa (password,nim,nama,alamat) VALUES ('${req.body.passowrd}', '${req.body.nim}','${req.body.nama}','${req.body.alamat}', '${hash}')`
   );
   res.send("Mahasiswa berhasil ditambahkan.");
 });
 
 // edit
-app.put("/api/mahasiswa/:id", async (req, res) => {
+app.put("/api/mahasiswa/:nim", async (req, res) => {
   await client.query(
-    `UPDATE mahasiswa SET nim = '${req.body.nim}', nama = '${req.body.nama}' WHERE id = ${req.params.id}`
+    `UPDATE mahasiswa SET password = '${req.body.password}', nim = '${req.body.nim}', nama = '${req.body.nama}', alamat = '${req.body.alamat}' WHERE nim = ${req.params.nim}`
   );
   res.send("Mahasiswa berhasil diedit.");
 });
@@ -129,6 +133,11 @@ app.delete("/api/mahasiswa/:id", async (req, res) => {
 app.get("/api/pelatihan", async (_req, res) => {
   const results = await client.query("SELECT * FROM pelatihan");
   res.json(results.rows);
+});
+
+app.get("/api/logout", (_req, res) => {
+  res.clearCookie("token");
+  res.redirect("/login");
 });
 
 app.listen(3000, () => {
