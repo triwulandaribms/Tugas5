@@ -11,7 +11,7 @@
     "postgres",
     "jwt"
   ],
-  "author": "Romi Kusuma Bakti <romikusumab@gmail.com>",
+  "author": "Tri Wulandari <triwulandari3456@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
