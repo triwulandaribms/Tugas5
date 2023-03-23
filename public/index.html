@@ -7,16 +7,38 @@
     <title>NodeSquad</title>
     <link rel="stylesheet" href="/assets/style.css" />
   </head>
+  <style>
+    body {
+      background-color: rgb(233, 236, 224);
+      align-items: center;
+    }
+
+    table {
+      border: 2px solid;
+      align-items: center;
+    }
+
+    th {
+      background-color: rgb(230, 123, 61);
+    }
+
+    button {
+      width: 10%;
+      bottom: 20px;
+    }
+  </style>
   <body>
     <h1>Selamat datang <span></span>!</h1>
     <table>
       <thead>
         <th>NIM</th>
-        <th>Nama</th>
+        <th>NAMA</th>
+        <th>ALAMAT</th>
       </thead>
       <tbody></tbody>
     </table>
     <form name="out">
+      <p>Tekan tombol dibawah ini untuk keluar!!</p>
       <button>Logout</button>
     </form>
     <script>
@@ -40,6 +62,10 @@
             const tdNama = document.createElement("td");
             tdNama.textContent = m.nama;
             tr.appendChild(tdNama);
+
+            const tdAlamat = document.createElement("td");
+            tdAlamat.textContent = m.alamat;
+            tr.appendChild(tdAlamat);
 
             tbody.appendChild(tr);
           });
